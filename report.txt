@@ -1,0 +1,50 @@
+1. Text Sentiment
+Library: Hugging Face pipeline hides tokenization, inference, and post-processing.
+
+Model: RuBERT-tiny2 — Transformer encoder, classification head on [CLS].
+
+Input: raw text string.
+
+Metrics: Accuracy, F1.
+
+2. Speech-to-Text
+Library: Hugging Face ASR pipeline, model already fine-tuned.
+
+Model: Wav2Vec2 — CNN feature extractor + Transformer + CTC decoder.
+
+Input: 16 kHz mono audio (LibriSpeech used during training).
+
+Metrics: WER (~3.4% on LibriSpeech clean).
+
+Notes: audio loaded via librosa as numpy array to avoid ffmpeg.
+
+3. Object Detection (REST API)
+Library: PyTorch Hub, single-line model load.
+
+Model: YOLOv5 — single forward pass predicts bboxes and classes.
+
+Input: image. Trained on COCO (80 classes).
+
+Metrics: mAP, Precision, Recall, IoU.
+
+Notes: FastAPI /detect endpoint, Swagger at /docs.
+
+4. Video Classification
+Library: Hugging Face. VideoMAE chosen over PE Video (350 MB vs 2 GB, no timm/accelerate).
+
+Model: VideoMAE fine-tuned on Kinetics-400, 16 frames input.
+
+Input: video file sampled to 16 frames.
+
+Metrics: Top-1 / Top-5 Accuracy.
+
+Notes: load_video(..., num_frames=16, backend="opencv") — num_frames is critical to avoid memory errors.
+
+5. Local LLM
+Library: Ollama — automatic memory management, no Python dependency conflicts, fully offline.
+
+Model: Qwen2.5-0.5B-Instruct GGUF Q4_K_M (~400 MB, ~1.5 GB RAM).
+
+Metrics: Perplexity, tokens/s, RAM usage.
+
+Notes: called via local HTTP API http://localhost:11434/api/generate. 0.5B chosen due to RAM limits.

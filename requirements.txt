@@ -1,0 +1,8 @@
+transformers
+torch
+tensorflow
+tensorflow-hub
+fastapi
+uvicorn
+opencv-python
+pillow
